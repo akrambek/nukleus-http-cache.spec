@@ -481,10 +481,34 @@ public class Rfc7234ProxyAcceptIT
 
     @Test
     @Specification({
+        "${streams}/expire.with.max-age/accept/client",
+        "${streams}/expire.with.max-age/accept/server",
+    })
+    public void shouldCacheMaxAgeAndExpires() throws Exception
+    {
+        k3po.start();
+        k3po.notifyBarrier("ROUTED_PROXY");
+        k3po.finish();
+    }
+
+    @Test
+    @Specification({
         "${streams}/not.cache.when.authorization.is.provided/accept/client",
         "${streams}/not.cache.when.authorization.is.provided/accept/server",
     })
     public void shouldNotCacheWithRequestAuthorizationHeader() throws Exception
+    {
+        k3po.start();
+        k3po.notifyBarrier("ROUTED_PROXY");
+        k3po.finish();
+    }
+
+    @Test
+    @Specification({
+            "${streams}/response.no-cache/accept/client",
+            "${streams}/response.no-cache/accept/server",
+    })
+    public void shouldRevalidateOnResponseNoCache() throws Exception
     {
         k3po.start();
         k3po.notifyBarrier("ROUTED_PROXY");
@@ -505,10 +529,34 @@ public class Rfc7234ProxyAcceptIT
 
     @Test
     @Specification({
-            "${streams}/cache.with.freshened.response.that.updated.by.strong.validator/accept/client",
-            "${streams}/cache.with.freshened.response.that.updated.by.strong.validator/accept/server",
+        "${streams}/response.no-cache.with.max-stale/accept/client",
+        "${streams}/response.no-cache.with.max-stale/accept/server",
+    })
+    public void shouldRevalidateOnResponseNoCacheWithStaleResponseConfigured() throws Exception
+    {
+        k3po.start();
+        k3po.notifyBarrier("ROUTED_PROXY");
+        k3po.finish();
+    }
+
+    @Test
+    @Specification({
+        "${streams}/cache.with.freshened.response.that.updated.by.strong.validator/accept/client",
+        "${streams}/cache.with.freshened.response.that.updated.by.strong.validator/accept/server",
     })
     public void shouldCacheWithFreshenedResponseThatUpdatedByStrongValidator() throws Exception
+    {
+        k3po.start();
+        k3po.notifyBarrier("ROUTED_PROXY");
+        k3po.finish();
+    }
+
+    @Test
+    @Specification({
+        "${streams}/cache.get.response.with.no-store/accept/client",
+        "${streams}/cache.get.response.with.no-store/accept/server",
+    })
+    public void shouldNotCacheResponseWithResponseNoStore() throws Exception
     {
         k3po.start();
         k3po.notifyBarrier("ROUTED_PROXY");
@@ -529,6 +577,18 @@ public class Rfc7234ProxyAcceptIT
 
     @Test
     @Specification({
+        "${streams}/not.cache.private.cache.with.s-maxage/accept/client",
+        "${streams}/not.cache.private.cache.with.s-maxage/accept/server",
+    })
+    public void shouldNotCacheResponseWithSMaxageInPrivateCache() throws Exception
+    {
+        k3po.start();
+        k3po.notifyBarrier("ROUTED_PROXY");
+        k3po.finish();
+    }
+
+    @Test
+    @Specification({
         "${streams}/cache.if.server.returns.503.while.validation/accept/client",
         "${streams}/cache.if.server.returns.503.while.validation/accept/server",
     })
@@ -539,5 +599,29 @@ public class Rfc7234ProxyAcceptIT
         k3po.finish();
     }
 
+
+    @Test
+    @Specification({
+        "${streams}/s-maxage.with.max-age/accept/client",
+        "${streams}/s-maxage.with.max-age/accept/server",
+    })
+    public void shouldOverrideMaxAgeWithSMaxage() throws Exception
+    {
+        k3po.start();
+        k3po.notifyBarrier("ROUTED_PROXY");
+        k3po.finish();
+    }
+
+    @Test
+    @Specification({
+        "${streams}/expire.with.s-maxage/accept/client",
+        "${streams}/expire.with.s-maxage/accept/server",
+    })
+    public void shouldOverrideExpireWithSMaxage() throws Exception
+    {
+        k3po.start();
+        k3po.notifyBarrier("ROUTED_PROXY");
+        k3po.finish();
+    }
     // TODO 304 on etags or last-modified
 }
