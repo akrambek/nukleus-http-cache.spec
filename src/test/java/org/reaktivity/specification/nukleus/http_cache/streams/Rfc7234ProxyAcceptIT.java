@@ -469,8 +469,8 @@ public class Rfc7234ProxyAcceptIT
 
     @Test
     @Specification({
-            "${streams}/invalidate.multiple.max-age/accept/client",
-            "${streams}/invalidate.multiple.max-age/accept/server",
+        "${streams}/invalidate.multiple.max-age/accept/client",
+        "${streams}/invalidate.multiple.max-age/accept/server",
     })
     public void shouldNotCacheWithMultipleMaxAge() throws Exception
     {
@@ -481,8 +481,20 @@ public class Rfc7234ProxyAcceptIT
 
     @Test
     @Specification({
-            "${streams}/not.use.cache.that.varys.with.asterisk.value/accept/client",
-            "${streams}/not.use.cache.that.varys.with.asterisk.value/accept/server",
+        "${streams}/not.cache.when.authorization.is.provided/accept/client",
+        "${streams}/not.cache.when.authorization.is.provided/accept/server",
+    })
+    public void shouldNotCacheWithRequestAuthorizationHeader() throws Exception
+    {
+        k3po.start();
+        k3po.notifyBarrier("ROUTED_PROXY");
+        k3po.finish();
+    }
+
+    @Test
+    @Specification({
+        "${streams}/not.use.cache.that.varys.with.asterisk.value/accept/client",
+        "${streams}/not.use.cache.that.varys.with.asterisk.value/accept/server",
     })
     public void shouldNotUseCacheForRequestThatHasAsteriskSymbolValueInVary() throws Exception
     {
@@ -497,6 +509,18 @@ public class Rfc7234ProxyAcceptIT
             "${streams}/cache.with.freshened.response.that.updated.by.strong.validator/accept/server",
     })
     public void shouldCacheWithFreshenedResponseThatUpdatedByStromgValidator() throws Exception
+    {
+        k3po.start();
+        k3po.notifyBarrier("ROUTED_PROXY");
+        k3po.finish();
+    }
+
+    @Test
+    @Specification({
+        "${streams}/explicitly.smaxage.and.authorization/accept/client",
+        "${streams}/explicitly.smaxage.and.authorization/accept/server",
+    })
+    public void shouldCacheWithRequestAuthorizationHeaderAndSmaxage() throws Exception
     {
         k3po.start();
         k3po.notifyBarrier("ROUTED_PROXY");
