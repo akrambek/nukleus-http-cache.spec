@@ -504,8 +504,8 @@ public class Rfc7234ProxyConnectIT
 
     @Test
     @Specification({
-            "${streams}/cache.get.response.with.no-store/connect/client",
-            "${streams}/cache.get.response.with.no-store/connect/server",
+        "${streams}/cache.get.response.with.no-store/connect/client",
+        "${streams}/cache.get.response.with.no-store/connect/server",
     })
     public void shouldNotCacheResponseWithResponseNoStore() throws Exception
     {
@@ -533,7 +533,9 @@ public class Rfc7234ProxyConnectIT
     })
     public void shouldCacheWithRequestAuthorizationHeaderAndSmaxage() throws Exception
     {
-
+        k3po.start();
+        k3po.notifyBarrier("ROUTED_PROXY");
+        k3po.finish();
     }
 
     @Test
@@ -550,8 +552,8 @@ public class Rfc7234ProxyConnectIT
 
     @Test
     @Specification({
-            "${streams}/cache.if.server.returns.503.while.validation/connect/client",
-            "${streams}/cache.if.server.returns.503.while.validation/connect/server",
+        "${streams}/cache.if.server.returns.503.while.validation/connect/client",
+        "${streams}/cache.if.server.returns.503.while.validation/connect/server",
     })
     public void shouldCacheIfServerReturns503WhileValidation() throws Exception
     {
