@@ -508,7 +508,7 @@ public class Rfc7234ProxyAcceptIT
             "${streams}/cache.with.freshened.response.that.updated.by.strong.validator/accept/client",
             "${streams}/cache.with.freshened.response.that.updated.by.strong.validator/accept/server",
     })
-    public void shouldCacheWithFreshenedResponseThatUpdatedByStromgValidator() throws Exception
+    public void shouldCacheWithFreshenedResponseThatUpdatedByStrongValidator() throws Exception
     {
         k3po.start();
         k3po.notifyBarrier("ROUTED_PROXY");
@@ -521,6 +521,18 @@ public class Rfc7234ProxyAcceptIT
         "${streams}/explicitly.smaxage.and.authorization/accept/server",
     })
     public void shouldCacheWithRequestAuthorizationHeaderAndSmaxage() throws Exception
+    {
+        k3po.start();
+        k3po.notifyBarrier("ROUTED_PROXY");
+        k3po.finish();
+    }
+
+    @Test
+    @Specification({
+        "${streams}/cache.if.server.returns.503.while.validation/accept/client",
+        "${streams}/cache.if.server.returns.503.while.validation/accept/server",
+    })
+    public void shouldCacheIfServerReturns503WhileValidation() throws Exception
     {
         k3po.start();
         k3po.notifyBarrier("ROUTED_PROXY");
